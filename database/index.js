@@ -14,10 +14,27 @@ let repoSchema = mongoose.Schema({
 
 let Repo = mongoose.model('Repo', repoSchema);
 
-let save = (/* TODO */) => {
-  // TODO: Your code here
-  // This function should save a repo or repos to
-  // the MongoDB
+let save = (repos) => {
+
+  for (let i = 0; i < repos.length; i++) {
+    let currentRepo = repos[i];
+    let repo = new Repo({
+      id: currentRepo.id,
+      name: currentRepo.name,
+      full_name: currentRepo.full_name,
+      owner: currentRepo.owner.login,
+      owner_id: currentRepo.owner.id,
+      url: currentRepo.url,
+      forks: currentRepo.forks,
+      open_issues: currentRepo.open_issues
+    });
+    repo.save((err) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+  }
+
 }
 
 module.exports.save = save;
