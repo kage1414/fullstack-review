@@ -17,7 +17,6 @@ let repoSchema = mongoose.Schema({
 let Repo = mongoose.model('Repo', repoSchema, 'repos');
 
 let save = (repos) => {
-
   return Repo.bulkWrite(
     repos.map((repo) =>
       ({
@@ -46,5 +45,17 @@ let save = (repos) => {
       console.log(err);
     });
 };
+
+let findAll = () => {
+  return Repo.find({})
+    .then((repos) => {
+      return repos;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+module.exports.findAll = findAll;
 
 module.exports.save = save;

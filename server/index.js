@@ -14,19 +14,18 @@ app.post('/repos', function (req, res) {
       return db.save(response.data);
     })
     .then((response) => {
-      console.log('response', response);
+      res.redirect('/repos');
     })
     .catch((err) => {
       console.log(err);
     });
-  // save the repo information in the database
 });
 
 app.get('/repos', function (req, res) {
-  // TODO - your code here!
-  console.log('get', req.body);
+  let allRepos = db.findAll();
+  console.log('all', allRepos);
   // This route should send back the top 25 repos
-  res.send('hello');
+  res.send(allRepos);
 });
 
 let port = 1128;
