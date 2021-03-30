@@ -9,7 +9,8 @@ let repoSchema = mongoose.Schema({
   owner_id: Number,
   url: String,
   forks: Number,
-  open_issues: Number
+  open_issues: Number,
+  updated_at: Date
 });
 
 let Repo = mongoose.model('Repo', repoSchema);
@@ -26,7 +27,8 @@ let save = (repos) => {
       owner_id: currentRepo.owner.id,
       url: currentRepo.url,
       forks: currentRepo.forks,
-      open_issues: currentRepo.open_issues
+      open_issues: currentRepo.open_issues,
+      updated_at: currentRepo.updated_at
     });
     repo.save((err) => {
       if (err) {
