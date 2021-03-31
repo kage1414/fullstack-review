@@ -1,9 +1,7 @@
 const express = require('express');
 const bodyparser = require('body-parser');
 let app = express();
-
 const Controller = require('./controller');
-
 const controller = new Controller();
 
 app.use(express.static(__dirname + '/../client/dist'));
