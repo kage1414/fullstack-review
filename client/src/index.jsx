@@ -9,7 +9,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       repos: []
-    }
+    };
 
   }
 
@@ -21,12 +21,12 @@ class App extends React.Component {
         username: term
       },
       success: (data) => {
-        console.log(data)
+        console.log(data);
       },
       error: (err) => {
-        console.log(err)
+        console.log(err);
       }
-    })
+    });
   }
 
   render () {
@@ -34,7 +34,7 @@ class App extends React.Component {
       <h1>Github Fetcher</h1>
       <RepoList repos={this.state.repos}/>
       <Search onSearch={this.search.bind(this)}/>
-    </div>)
+    </div>);
   }
 }
 
