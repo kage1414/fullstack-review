@@ -11,17 +11,19 @@ app.use(bodyparser.urlencoded());
 app.use(bodyparser.json());
 
 app.post('/repos', function (req, res) {
-  controller.reposPost(req.body.username);
-  controller.reposGet()
+  controller.reposPost(req.body.username, controller.reposGet()
     .exec((err, repos) => {
       let top25 = controller.filterTop25(repos);
-      let html = controller.toHTML(top25)
-      res.send(html);
-    });
+      res.send(top25);
+    }));
 });
 
 app.get('/repos', function (req, res) {
-
+  controller.reposGet()
+    .exec((err, repos) => {
+      let top25 = controller.filterTop25(repos);
+      res.send(top25);
+    });
 });
 
 let port = 1128;
