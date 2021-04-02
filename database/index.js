@@ -21,34 +21,67 @@ let save = (repo) => {
   // let start = Date.now();
 
   // Find
+
+  Repo.find({ _id: repo.id })
+    .exec((err, data) => {
+      if (data.length > 0) {
+        let doc = new Repo(data[0]);
+        return doc.save()
+          .then((saved) => {
+            return saved;
+          });
+      } else {
+        Repo.updateOne({ _id: repo.id }, {
+          _id: repo.id,
+          name: repo.name,
+          fullName: repo.full_name,
+          owner: repo.owner.login,
+          ownerId: repo.owner.id,
+          url: repo.url,
+          forks: repo.forks,
+          openIssues: repo.open_issues,
+          updatedAt: repo.updated_at
+        }, {upsert: true, overwrite: true })
+          .exec((err, numAffected) => {
+            // console.log(Date.now() - start);
+            return numAffected;
+          })
+          .catch((err) => {
+            if (err) {
+              console.log(err);
+            }
+          });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
     // Response
       // Update
     // No-Response
       // Save
 
-  Repo.updateOne({ _id: repo.id }, {
-    _id: repo.id,
-    name: repo.name,
-    fullName: repo.full_name,
-    owner: repo.owner.login,
-    ownerId: repo.owner.id,
-    url: repo.url,
-    forks: repo.forks,
-    openIssues: repo.open_issues,
-    updatedAt: repo.updated_at
-  }, {upsert: true, overwrite: true })
-    .exec((err, numAffected) => {
-      // console.log(Date.now() - start);
-      return numAffected;
-    })
-    .catch((err) => {
-      if (err) {
-        console.log(err);
-      }
-    });
+  // Repo.updateOne({ _id: repo.id }, {
+  //   _id: repo.id,
+  //   name: repo.name,
+  //   fullName: repo.full_name,
+  //   owner: repo.owner.login,
+  //   ownerId: repo.owner.id,
+  //   url: repo.url,
+  //   forks: repo.forks,
+  //   openIssues: repo.open_issues,
+  //   updatedAt: repo.updated_at
+  // }, {upsert: true, overwrite: true })
+  //   .exec((err, numAffected) => {
+  //     // console.log(Date.now() - start);
+  //     return numAffected;
+  //   })
+  //   .catch((err) => {
+  //     if (err) {
+  //       console.log(err);
+  //     }
+  //   });
 
-
-  Repo.find
 };
 
 let getFindAllPromise = () => {
