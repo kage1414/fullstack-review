@@ -1,10 +1,13 @@
-// const Promise = require('bluebird');
+const Promise = require('bluebird');
 const mongoose = require('mongoose');
-// mongoose.Promise = Promise;
-mongoose.connect('mongodb://localhost/fetcher');
+// set Promise provider to bluebird
+mongoose.Promise = require('bluebird');
+mongoose.connect('mongodb://localhost/fetcher', {
+  useMongoClient: true
+});
 
 let repoSchema = mongoose.Schema({
-  _id: {type: Number, unique: true},
+  _id: Number,
   name: String,
   fullName: String,
   owner: String,
@@ -15,73 +18,30 @@ let repoSchema = mongoose.Schema({
   updatedAt: Date
 });
 
-let Repo = mongoose.model('Repo', repoSchema, 'repos');
+let Repo = mongoose.model('Repo', repoSchema);
 
 let save = (repo) => {
-  // let start = Date.now();
 
-  // Find
+  return Repo.updateOne({ _id: repo.id }, {
+    _id: repo.id,
+    name: repo.name,
+    fullName: repo.full_name,
+    owner: repo.owner.login,
+    ownerId: repo.owner.id,
+    url: repo.url,
+    forks: repo.forks,
+    openIssues: repo.open_issues,
+    updatedAt: repo.updated_at
+  }, {upsert: true, overwrite: true }).exec();
+};
 
-  Repo.find({ _id: repo.id })
-    .exec((err, data) => {
-      if (data.length > 0) {
-        let doc = new Repo(data[0]);
-        return doc.save()
-          .then((saved) => {
-            return saved;
-          });
-      } else {
-        Repo.updateOne({ _id: repo.id }, {
-          _id: repo.id,
-          name: repo.name,
-          fullName: repo.full_name,
-          owner: repo.owner.login,
-          ownerId: repo.owner.id,
-          url: repo.url,
-          forks: repo.forks,
-          openIssues: repo.open_issues,
-          updatedAt: repo.updated_at
-        }, {upsert: true, overwrite: true })
-          .exec((err, numAffected) => {
-            // console.log(Date.now() - start);
-            return numAffected;
-          })
-          .catch((err) => {
-            if (err) {
-              console.log(err);
-            }
-          });
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-    // Response
-      // Update
-    // No-Response
-      // Save
+let saveAll = async repos => {
 
-  // Repo.updateOne({ _id: repo.id }, {
-  //   _id: repo.id,
-  //   name: repo.name,
-  //   fullName: repo.full_name,
-  //   owner: repo.owner.login,
-  //   ownerId: repo.owner.id,
-  //   url: repo.url,
-  //   forks: repo.forks,
-  //   openIssues: repo.open_issues,
-  //   updatedAt: repo.updated_at
-  // }, {upsert: true, overwrite: true })
-  //   .exec((err, numAffected) => {
-  //     // console.log(Date.now() - start);
-  //     return numAffected;
-  //   })
-  //   .catch((err) => {
-  //     if (err) {
-  //       console.log(err);
-  //     }
-  //   });
-
+  let promises = repos.map((repo) => {
+    return save(repo);
+  });
+  await Promise.all(promises);
+  return;
 };
 
 let getFindAllPromise = () => {
@@ -91,6 +51,6 @@ let getFindAllPromise = () => {
 
 module.exports.getFindAllPromise = getFindAllPromise;
 
-module.exports.save = save;
+module.exports.saveAll = saveAll;
 
 module.exports.Repo = Repo;

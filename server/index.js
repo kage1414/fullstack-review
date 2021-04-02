@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyparser = require('body-parser');
 let app = express();
+const Promise = require('bluebird');
 // const Controller = require('./controller');
 // const controller = new Controller();
 const db = require('../database/index');
@@ -16,39 +17,23 @@ app.post('/repos', function (req, res) {
       return response.data;
     })
     .then((results) => {
-      // let counter = 0;
-      results.forEach(repo => {
-        db.save(repo);
-      });
-      // for await (let repo of results) {
-      //   db.save(repo)
-      //     .then(() => {
-      //       counter++;
-      //       if (counter === results.length) {
-      //         return null;
-      //       }
-      //     });
-      // }
-      // return null;
+      console.log('saveAll start')
+      return db.saveAll(results);
     })
     .then(() => {
-      db.Repo.
-        find({}).
-        limit(25).
-        sort({ forks: 1 }).
-        exec((err, data) => {
+      console.log('saveAll end');
+      db.Repo.find({})
+        .limit(25)
+        .sort({ forks: -1 })
+        .exec((err, data) => {
           if (err) {
             console.log(err);
           } else {
             res.send(data);
           }
         });
+      console.log('db.Repo.find');
     })
-    // .then((repos) => {
-    //   res.send(repos);
-    // //   let top25 = controller.filterTop25(repos);
-    // //   res.send(top25);
-    // })
     .catch((err) => {
       if (err) {
         console.log(err);
