@@ -13,6 +13,7 @@ class App extends React.Component {
 
   }
 
+
   search (term) {
     console.log(`${term} was searched`);
     $.ajax('/repos', {
@@ -22,6 +23,7 @@ class App extends React.Component {
       },
       success: (data) => {
         console.log(data);
+        this.state.repos = data;
       },
       error: (err) => {
         console.log(err);

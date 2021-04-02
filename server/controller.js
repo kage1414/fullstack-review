@@ -6,10 +6,7 @@ class Controller {
   reposPost(username, callback) {
     return helpers.getReposByUsername(username)
       .then((response) => {
-        return db.save(response.data);
-      })
-      .then((response) => {
-        callback();
+        callback(response.data);
       })
       .catch((err) => {
         console.log(err);
@@ -17,10 +14,12 @@ class Controller {
   }
 
   reposGet() {
+    console.log('- - - - - reposGet - - - -');
     return db.getFindAllPromise();
   }
 
   filterTop25(repos) {
+    console.log('- - - - - filterTop25 - - - -');
     repos.sort((a, b) => {
       if (a.forks > b.forks) {
         return -1;
@@ -28,6 +27,7 @@ class Controller {
       if (a.forks < b.forks) {
         return 1;
       }
+
       return 0;
     });
     return repos.slice(0, 25);
