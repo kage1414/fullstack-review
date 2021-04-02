@@ -1,17 +1,24 @@
 import React from 'react';
 import TableRow from './TableRow.jsx';
+import TableHeader from './TableHeader.jsx';
 
-const RepoList = (props) => (
-  <div>
-    <h4> Repo List Component </h4>
-    <span>There are {props.repos.length} repos.</span>
-    <table>
-      <tbody>
-        {props.repos.map((repo, idx) => <TableRow row={repo} key={idx} />)}
-      </tbody>
-    </table>
-  </div>
-);
+const RepoList = (props) => {
+
+  return (
+    <div>
+      <h4> Repo List Component </h4>
+      <span>There are {props.repos.length} repos.</span>
+      <table>
+        <thead>
+          <TableHeader headers={props.headers} />
+        </thead>
+        <tbody>
+          {props.repos.map((repo, idx) => <TableRow row={repo} key={idx} />)}
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
 
 
