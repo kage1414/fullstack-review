@@ -1,6 +1,5 @@
 const Promise = require('bluebird');
 const mongoose = require('mongoose');
-// set Promise provider to bluebird
 mongoose.Promise = require('bluebird');
 mongoose.connect('mongodb://localhost/fetcher', {
   useMongoClient: true
