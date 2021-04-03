@@ -6,14 +6,11 @@ const controller = new Controller();
 const path = require('path');
 
 const filePath = path.join(__dirname, '/../client/dist');
+console.log('filePath', filePath);
 
-app.use(express.static(filePath));
+app.use('/', express.static(filePath));
 app.use(bodyparser.urlencoded());
 app.use(bodyparser.json());
-
-app.get('/', (req, res) => {
-  res.sendFile(filePath);
-});
 
 app.post('/repos', controller.reposPost);
 
