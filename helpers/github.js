@@ -6,7 +6,7 @@ let getReposByUsername = (owner) => {
     url: `https://api.github.com/users/${owner}/repos`,
     headers: {
       'User-Agent': 'request',
-      'Authorization': `token ${config.TOKEN}`
+      'Authorization': `token ${process.env.TOKEN}`
     },
     method: 'GET'
   };
