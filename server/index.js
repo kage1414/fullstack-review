@@ -1,12 +1,19 @@
 const express = require('express');
 const bodyparser = require('body-parser');
-let app = express();
+const app = express();
 const Controller = require('./controller.js');
 const controller = new Controller();
+const path = require('path');
 
-app.use(express.static(__dirname + '/../client/dist'));
+const filePath = path.join(__dirname, '/../client/dist');
+
+app.use(express.static(filePath));
 app.use(bodyparser.urlencoded());
 app.use(bodyparser.json());
+
+app.get('/', (req, res) => {
+  res.sendFile(filePath);
+});
 
 app.post('/repos', controller.reposPost);
 
@@ -14,7 +21,7 @@ app.get('/repos', controller.reposGet);
 
 let port = process.env.PORT;
 
-if (port === null || port === '') {
+if (port === null || port === '' || port === undefined) {
   port = 1128;
 }
 
