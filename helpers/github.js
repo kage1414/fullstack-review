@@ -6,7 +6,7 @@ let s3 = new aws.S3({
   secretAccessKey: process.env.S3_SECRET
 });
 console.log('- - - - - - - - - - - - - -');
-console.log(s3);
+console.log('s3', s3);
 console.log('- - - - - - - - - - - - - -');
 
 let getReposByUsername = (owner) => {
