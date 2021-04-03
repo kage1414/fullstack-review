@@ -13,7 +13,9 @@ const RepoList = (props) => {
           <TableHeader headers={props.headers} />
         </thead>
         <tbody>
-          {props.repos.map((repo, idx) => <TableRow repo={repo} key={idx} />)}
+          {props.repos.map((repo, idx) => {
+            return <TableRow repo={repo} key={repo.html_url} />;
+          })}
         </tbody>
       </table>
     </div>
