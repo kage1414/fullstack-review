@@ -1,2 +1,2 @@
-web: npm run react-dev
+worker: npm run react-dev
 web: npm run server-dev
