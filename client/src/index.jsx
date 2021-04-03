@@ -45,7 +45,8 @@ class App extends React.Component {
         console.log(data);
         let headers = Object.keys(data[0]);
         this.setState({
-          repos: data
+          repos: data,
+          headers: headers
         });
       },
       error: (err) => {
