@@ -39,6 +39,7 @@ class App extends React.Component {
         username: term
       },
       success: (data) => {
+        console.log(data);
         let headers = Object.keys(data[0]);
         this.setState( {
           repos: data,

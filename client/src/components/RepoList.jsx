@@ -13,7 +13,7 @@ const RepoList = (props) => {
           <TableHeader headers={props.headers} />
         </thead>
         <tbody>
-          {props.repos.map((repo, idx) => <TableRow row={repo} key={idx} />)}
+          {props.repos.map((repo, idx) => <TableRow repo={repo} key={idx} />)}
         </tbody>
       </table>
     </div>

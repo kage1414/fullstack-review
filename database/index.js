@@ -11,7 +11,7 @@ let repoSchema = mongoose.Schema({
   fullName: String,
   owner: String,
   ownerId: Number,
-  url: String,
+  html_url: String,
   forks: Number,
   openIssues: Number,
   updatedAt: Date
@@ -27,7 +27,7 @@ let save = (repo) => {
     fullName: repo.full_name,
     owner: repo.owner.login,
     ownerId: repo.owner.id,
-    url: repo.url,
+    html_url: repo.html_url,
     forks: repo.forks,
     openIssues: repo.open_issues,
     updatedAt: repo.updated_at
