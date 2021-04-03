@@ -1,36 +1,54 @@
 const helpers = require('../helpers/github');
 const db = require('../database/index');
+const Promise = require('bluebird');
 
 class Controller {
 
-  reposPost(username, callback) {
-    return helpers.getReposByUsername(username)
-      .then((response) => {
-        callback(response.data);
-      })
-      .catch((err) => {
-        console.log(err);
+  reposPost(req, res) {
+    if (req.body.username) {
+      helpers.getReposByUsername(req.body.username)
+        .then((response) => {
+          return response.data;
+        })
+        .then((results) => {
+          return db.saveAll(results);
+        })
+        .then(() => {
+          db.Repo.find({})
+            .limit(25)
+            .sort({ openIssues: -1 })
+            // .sort({ forks: -1 })
+            .exec((err, data) => {
+              if (err) {
+                console.log(err);
+              } else {
+                console.log(data);
+                res.send(data);
+              }
+            });
+        })
+        .catch((err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+    } else {
+      res.sendStatus(404);
+    }
+  }
+
+  reposGet(req, res) {
+    db.Repo.find({})
+      .limit(25)
+      .sort({ openIssues: -1 })
+      // .sort({ forks: -1 })
+      .exec((err, data) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(data);
+        }
       });
-  }
-
-  reposGet() {
-    console.log('- - - - - reposGet - - - -');
-    return db.getFindAllPromise();
-  }
-
-  filterTop25(repos) {
-    console.log('- - - - - filterTop25 - - - -');
-    repos.sort((a, b) => {
-      if (a.forks > b.forks) {
-        return -1;
-      }
-      if (a.forks < b.forks) {
-        return 1;
-      }
-
-      return 0;
-    });
-    return repos.slice(0, 25);
   }
 
 }

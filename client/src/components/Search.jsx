@@ -5,6 +5,7 @@ class Search extends React.Component {
     super(props);
     this.onChange = this.onChange.bind(this);
     this.search = this.search.bind(this);
+    this.getRepos = this.getRepos.bind(this);
     this.state = {
       term: ''
     };
@@ -18,6 +19,10 @@ class Search extends React.Component {
 
   search() {
     this.props.onSearch(this.state.term);
+  }
+
+  getRepos() {
+    this.props.getRepos();
   }
 
   render() {

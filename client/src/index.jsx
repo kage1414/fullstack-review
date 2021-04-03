@@ -11,28 +11,35 @@ class App extends React.Component {
       repos: [],
       headers: []
     };
-    this.getRepos();
   }
 
-
-  getRepos () {
+  componentDidMount() {
     $.ajax('/repos', {
       type: 'GET',
       success: (data) => {
+        this.setState({
+          repos: [],
+          headers: []
+        });
         let headers = Object.keys(data[0]);
+        console.log(data);
         this.setState({
           repos: data,
           headers: headers
         });
       },
       error: (err) => {
-        console.log(err);
+        console.error(err);
       }
     });
   }
 
   search (term) {
     console.log(`${term} was searched`);
+    this.setState({
+      repos: [],
+      headers: []
+    });
     $.ajax('/repos', {
       type: 'POST',
       data: {
@@ -41,13 +48,13 @@ class App extends React.Component {
       success: (data) => {
         console.log(data);
         let headers = Object.keys(data[0]);
-        this.setState( {
+        this.setState({
           repos: data,
           headers: headers
         });
       },
       error: (err) => {
-        console.log(err);
+        console.error(err);
       }
     });
   }
@@ -55,6 +62,7 @@ class App extends React.Component {
   render () {
     return (<div>
       <h1>Github Fetcher</h1>
+      <h2>{this.state.repos.length}</h2>
       <RepoList repos={this.state.repos} headers={this.state.headers}/>
       <Search onSearch={this.search.bind(this)}/>
     </div>);
