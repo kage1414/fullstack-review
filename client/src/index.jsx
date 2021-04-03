@@ -17,10 +17,6 @@ class App extends React.Component {
     $.ajax('/repos', {
       type: 'GET',
       success: (data) => {
-        this.setState({
-          repos: [],
-          headers: []
-        });
         let headers = Object.keys(data[0]);
         console.log(data);
         this.setState({
@@ -35,11 +31,11 @@ class App extends React.Component {
   }
 
   search (term) {
+    // this.setState({
+    //   repos: [],
+    //   headers: []
+    // });
     console.log(`${term} was searched`);
-    this.setState({
-      repos: [],
-      headers: []
-    });
     $.ajax('/repos', {
       type: 'POST',
       data: {
@@ -49,8 +45,7 @@ class App extends React.Component {
         console.log(data);
         let headers = Object.keys(data[0]);
         this.setState({
-          repos: data,
-          headers: headers
+          repos: data
         });
       },
       error: (err) => {
