@@ -1,5 +1,13 @@
 const axios = require('axios');
-const config = require('../config.js');
+const aws = require('aws-sdk');
+
+let s3 = new aws.S3({
+  accessKeyId: process.env.TOKEN,
+  secretAccessKey: process.env.S3_SECRET
+});
+console.log('- - - - - - - - - - - - - -');
+console.log(s3);
+console.log('- - - - - - - - - - - - - -');
 
 let getReposByUsername = (owner) => {
   let options = {
