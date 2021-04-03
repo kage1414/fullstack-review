@@ -1,13 +1,6 @@
 const axios = require('axios');
 const aws = require('aws-sdk');
 
-let s3 = new aws.S3({
-  accessKeyId: process.env.TOKEN,
-});
-console.log('- - - - - - - - - - - - - -');
-console.log('s3', process.env.TOKEN);
-console.log('- - - - - - - - - - - - - -');
-
 let getReposByUsername = (owner) => {
   let options = {
     url: `https://api.github.com/users/${owner}/repos`,
