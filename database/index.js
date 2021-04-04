@@ -7,11 +7,19 @@ let URL = process.env.mongoUrl;
 
 if (!URL) {
   URL = 'mongodb://localhost/fetcher';
+  mongoose.connect(URL, {
+    useMongoClient: true
+  });
+} else {
+  mongoose.connect( URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  }, () => {
+  console.log("connected")
+  });
 }
 
-mongoose.connect(URL, {
-  useMongoClient: true
-});
+
 
 let repoSchema = mongoose.Schema({
   _id: Number,
