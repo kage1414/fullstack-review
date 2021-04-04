@@ -6,8 +6,8 @@
   "scripts": {
     "react-dev": "webpack -d --watch",
     "server-dev": "nodemon server/index.js",
-    "dev": "webpack -d --watch && nodemon server/index.js",
-    "heroku-postbuild": "webpack -p --config ./webpack.prod.config.js --progress"
+    // "heroku-postbuild": "webpack -p --config ./webpack.prod.config.js --progress",
+    "dev": "webpack -d --watch && nodemon server/index.js"
   },
   "author": "Beth Johnson",
   "license": "ISC",
