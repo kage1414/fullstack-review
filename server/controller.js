@@ -5,6 +5,7 @@ const Promise = require('bluebird');
 class Controller {
 
   reposPost(req, res) {
+    console.log('POST');
     if (req.body.username) {
       helpers.getReposByUsername(req.body.username)
         .then((response) => {
@@ -37,6 +38,7 @@ class Controller {
   }
 
   reposGet(req, res) {
+    console.log('POST');
     db.Repo.find({})
       .limit(25)
       .sort({ openIssues: -1 })

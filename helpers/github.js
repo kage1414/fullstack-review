@@ -1,5 +1,4 @@
 const axios = require('axios');
-const aws = require('aws-sdk');
 
 let getReposByUsername = (owner) => {
   let options = {
