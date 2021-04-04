@@ -27,7 +27,7 @@ class TableRow extends React.Component {
         if (cell[0] === 'name') {
           return <TableCell hyperlink={this.props.repo.html_url} cell={cell[1]} key={idx} />;
         } else {
-          return <TableCell hyperlink={''} cell={cell[1]} key={cell[1]} />;
+          return <TableCell hyperlink={''} cell={cell[1]} key={idx} />;
         }
       })
     }
