@@ -38,7 +38,7 @@ let Repo = mongoose.model('Repo', repoSchema);
 
 let save = (repo) => {
 
-  return Repo.updateOne({ _id: repo.id }, {
+  return Repo.updateOne({ _id: repo.id }, { $set: {
     _id: repo.id,
     name: repo.name,
     fullName: repo.full_name,
@@ -48,7 +48,7 @@ let save = (repo) => {
     forks: repo.forks,
     openIssues: repo.open_issues,
     updatedAt: repo.updated_at
-  }, {upsert: true, overwrite: true }).exec();
+  } }, {upsert: true, overwrite: true }).exec();
 };
 
 let saveAll = async repos => {
