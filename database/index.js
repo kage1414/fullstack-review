@@ -6,11 +6,10 @@ mongoose.Promise = require('bluebird');
 let URL = process.env.mongoUrl;
 
 if (!URL) {
-  URL = ''
+  URL = 'mongodb://localhost/fetcher';
 }
 
-
-mongoose.connect(process.env.mongoUrl, {
+mongoose.connect(URL, {
   useMongoClient: true
 });
 
