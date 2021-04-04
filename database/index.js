@@ -12,8 +12,6 @@ if (!URL) {
   });
 } else {
   mongoose.connect(URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
     dbName: process.env.dbName
   }, () => {
   console.log("connected")
@@ -38,17 +36,21 @@ let Repo = mongoose.model('Repo', repoSchema);
 
 let save = (repo) => {
 
-  return Repo.updateOne({ _id: repo.id }, { $set: {
-    _id: repo.id,
-    name: repo.name,
-    fullName: repo.full_name,
-    owner: repo.owner.login,
-    ownerId: repo.owner.id,
-    html_url: repo.html_url,
-    forks: repo.forks,
-    openIssues: repo.open_issues,
-    updatedAt: repo.updated_at
-  } }, {upsert: true, overwrite: true }).exec();
+  return Repo.update(
+    { _id: repo.id },
+    {
+      _id: repo.id,
+      name: repo.name,
+      fullName: repo.full_name,
+      owner: repo.owner.login,
+      ownerId: repo.owner.id,
+      html_url: repo.html_url,
+      forks: repo.forks,
+      openIssues: repo.open_issues,
+      updatedAt: repo.updated_at
+    },
+    {upsert: true, overwrite: true }
+    ).exec();
 };
 
 let saveAll = async repos => {
