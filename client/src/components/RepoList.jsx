@@ -14,7 +14,7 @@ const RepoList = (props) => {
         </thead>
         <tbody>
           {props.repos.map((repo, idx) => {
-            return <TableRow repo={repo} key={JSON.stringify(repo)} />;
+            return <TableRow repo={repo} key={Math.random()} />;
           })}
         </tbody>
       </table>
