@@ -5,8 +5,8 @@ const Promise = require('bluebird');
 class Controller {
 
   reposPost(req, res) {
-    console.log('POST');
     if (req.body.username) {
+      console.log('POST');
       helpers.getReposByUsername(req.body.username)
         .then((response) => {
           return response.data;
