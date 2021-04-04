@@ -6,7 +6,6 @@ class Controller {
 
   reposPost(req, res) {
     if (req.body.username) {
-      console.log('POST');
       helpers.getReposByUsername(req.body.username)
         .then((response) => {
           return response.data;
@@ -39,7 +38,6 @@ class Controller {
   }
 
   reposGet(req, res) {
-    console.log('POST');
     db.Repo.find({})
       .limit(25)
       .sort({ openIssues: -1 })
