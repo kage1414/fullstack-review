@@ -13,7 +13,8 @@ if (!URL) {
 } else {
   mongoose.connect( URL, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    dbName: process.env.dbName
   }, () => {
   console.log("connected")
   });
