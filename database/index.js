@@ -11,7 +11,7 @@ if (!URL) {
     useMongoClient: true
   });
 } else {
-  mongoose.connect( URL, {
+  mongoose.connect(URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     dbName: process.env.dbName
