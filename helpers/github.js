@@ -1,9 +1,9 @@
 const axios = require('axios');
 let TOKEN = process.env.TOKEN;
 
-if (!TOKEN) {
-  TOKEN = require('../config.js').TOKEN;
-}
+// if (!TOKEN) {
+//   TOKEN = require('../config.js').TOKEN;
+// }
 
 let getReposByUsername = (owner) => {
   let options = {
