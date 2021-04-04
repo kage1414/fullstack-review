@@ -25,9 +25,9 @@ class TableRow extends React.Component {
       this.keyValArray.map((cell, idx) => {
 
         if (cell[0] === 'name') {
-          return <TableCell hyperlink={this.props.repo.html_url} cell={cell[1]} key={idx} />;
+          return <TableCell hyperlink={this.props.repo.html_url} cell={cell[1]} key={cell[1]} />;
         } else {
-          return <TableCell hyperlink={''} cell={cell[1]} key={idx} />;
+          return <TableCell hyperlink={''} cell={cell[1]} key={cell[1]} />;
         }
       })
     }
