@@ -2,9 +2,16 @@ const Promise = require('bluebird');
 const path = require('path');
 const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
+
+let URL = process.env.mongoUrl;
+
+if (!URL) {
+  URL = ''
+}
+
+
 mongoose.connect(process.env.mongoUrl, {
-  useMongoClient: true,
-  dbName: process.env.dbName
+  useMongoClient: true
 });
 
 let repoSchema = mongoose.Schema({
