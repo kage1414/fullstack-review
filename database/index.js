@@ -1,9 +1,24 @@
 const Promise = require('bluebird');
+const path = require('path');
 const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
-mongoose.connect('mongodb://localhost/fetcher', {
-  useMongoClient: true
-});
+
+let URL = process.env.mongoUrl;
+
+if (!URL) {
+  URL = 'mongodb://localhost/fetcher';
+  mongoose.connect(URL, {
+    useMongoClient: true
+  });
+} else {
+  mongoose.connect(URL, {
+    dbName: process.env.dbName
+  }, () => {
+  console.log("connected")
+  });
+}
+
+
 
 let repoSchema = mongoose.Schema({
   _id: Number,
@@ -21,17 +36,21 @@ let Repo = mongoose.model('Repo', repoSchema);
 
 let save = (repo) => {
 
-  return Repo.updateOne({ _id: repo.id }, {
-    _id: repo.id,
-    name: repo.name,
-    fullName: repo.full_name,
-    owner: repo.owner.login,
-    ownerId: repo.owner.id,
-    html_url: repo.html_url,
-    forks: repo.forks,
-    openIssues: repo.open_issues,
-    updatedAt: repo.updated_at
-  }, {upsert: true, overwrite: true }).exec();
+  return Repo.update(
+    { _id: repo.id },
+    {
+      _id: repo.id,
+      name: repo.name,
+      fullName: repo.full_name,
+      owner: repo.owner.login,
+      ownerId: repo.owner.id,
+      html_url: repo.html_url,
+      forks: repo.forks,
+      openIssues: repo.open_issues,
+      updatedAt: repo.updated_at
+    },
+    {upsert: true, overwrite: true }
+    ).exec();
 };
 
 let saveAll = async repos => {

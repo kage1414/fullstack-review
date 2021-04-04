@@ -30,6 +30,7 @@ class Controller {
           if (err) {
             console.log(err);
           }
+          res.sendStatus(404);
         });
     } else {
       res.sendStatus(404);

@@ -1,2 +1,2 @@
-web: webpack -d
-web: node server/index.js
+worker: npm run react-dev
+web: npm run server-dev
